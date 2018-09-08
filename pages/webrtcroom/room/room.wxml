@@ -1,4 +1,3 @@
-<import src='/pages/template/mytemplate/mytemplate.wxml'/>
 <view class="container-box">
 		<view class="camera-box">
 				<webrtc-room id="webrtcroom" template="1v1" roomID="{{roomID}}" userID="{{userID}}" roomCreator="{{roomCreator}}" userSig="{{userSig}}" sdkAppID="{{sdkAppID}}" accountType="{{accountType}}" privateMapKey="{{privateMapKey}}" beauty="{{beauty}}" muted="{{muted}}" debug="{{debug}}" bindRoomEvent="onRoomEvent" bindIMEvent="onIMEvent" enableIM="true"></webrtc-room>

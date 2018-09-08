@@ -338,8 +338,8 @@ Component({
             return;
           }
 
+          console.log(res);
           // self.data.requestSigFailCount = 0;
-          console.log(res.data.RspBody);
           var roomSig = JSON.stringify(res.data["RspBody"]);
           var pushUrl = "room://cloud.tencent.com?sdkappid=" + sdkAppID + "&roomid=" + roomID + "&userid=" + userID + "&roomsig=" + encodeURIComponent(roomSig);
           console.log("roomSigInfo", roomID, userID, roomSig, pushUrl);

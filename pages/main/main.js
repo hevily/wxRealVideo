@@ -115,7 +115,6 @@ Page({
         userSig: info.userSig,
         sdkAppID: info.sdkAppId,
         accType: info.accountType,
-        roomID: '1521324381',
       }
 
       getApp().globalData.options = options;
