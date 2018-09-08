@@ -7,7 +7,7 @@
       <view class="weui-footer__links">
         <navigator url="" class="weui-footer__link">PICC中国</navigator>
       </view>
-      <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view>
+      <view class="weui-footer__text">Copyright © 2008-2016 PICC</view>
     </view>
   </view>
 </view>

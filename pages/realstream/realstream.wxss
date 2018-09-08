@@ -13,7 +13,7 @@
   position: fixed;
   display: flex;
   align-items: center;
-  bottom: 2vw;
+  bottom: 3vw;
 }
 .img-box {
   position: relative;

@@ -1,7 +1,7 @@
 {
 	"description": "项目配置文件。",
 	"setting": {
-		"urlCheck": false,
+		"urlCheck": true,
 		"es6": true,
 		"postcss": true,
 		"minified": false,
@@ -10,7 +10,7 @@
 	"compileType": "miniprogram",
 	"libVersion": "2.2.3",
 	"appid": "wx00c275c6be7f2cc7",
-	"projectname": "Liveroom%20%E7%BB%84%E4%BB%B6%E6%95%B4%E5%90%88",
+	"projectname": "PICC%E5%9C%A8%E7%BA%BF%E6%A1%88%E4%BB%B6%E5%A4%84%E7%90%86",
 	"condition": {
 		"search": {
 			"current": -1,

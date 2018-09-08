@@ -3,6 +3,7 @@ var config = require('../config.js');
 var getloginInfo = require('../getlogininfo.js');
 var socketOpen = false;
 var socketMsgQueue = [];
+var app = getApp();
 
 function sendSocketMessage(msg) {
   console.log('send msg:')
@@ -18,7 +19,6 @@ function sendSocketMessage(msg) {
 
 /////////////////////////////////////////////////////
 var ws = {
-  openid: '',
   send: sendSocketMessage,
   onopen: null,
   onmessage: null,
@@ -29,7 +29,6 @@ Stomp.clearInterval = function () { }
 var client = Stomp.over(ws);
 
 function initConnect(openid, callback) {
-  console.log(openid);
   client.connect({}, function (sessionId) {
     console.log('sessionId', sessionId)
 
@@ -38,18 +37,14 @@ function initConnect(openid, callback) {
       const data = JSON.parse(res.body);
       // "{\"reply\":true,\"roomId\":1209,\"orderNo\":\"PICC2018090211153636798\"}"
       const content = JSON.parse(data.content);
-      console.log(content);
-      callback && callback(content);
-
-      // var url = '/pages/webrtcroom/room/room?roomID=' + content.roomId + '&roomName=' + '' + '&userName=' + '';
-      // wx.navigateTo({ url: url });
+      app.globalData.roomID = content.roomId;
+      app.globalData.orderNo = content.orderNo;
+      callback && callback();
     });
   })
-
-  ws.openid = openid;
 }
 
-function startSocket() {
+function startSocket(options) {
   wx.connectSocket({
     url: config.wssUrl + '/api/portfolio',
     header: {
@@ -67,7 +62,7 @@ function startSocket() {
     socketMsgQueue = []
     ws.onopen && ws.onopen()
 
-    sendRequestVedio(ws.openid);
+    sendRequestVedio(options);
   })
 
   wx.onSocketMessage(function (res) {
@@ -125,4 +120,5 @@ module.exports = {
   startSocket: startSocket,
   sendRequestVedio: sendRequestVedio,
   getSeatList: getSeatList,
+  unsubscibeCall: unsubscibeCall
 }

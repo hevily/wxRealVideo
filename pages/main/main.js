@@ -1,5 +1,6 @@
 var config = require('../../config');
 var rtcroom = require('../../utils/webrtcroom.js');
+var app = getApp();
 
 /////////////////////////////////////////////////////
 // pages/main/main.js
@@ -55,7 +56,6 @@ Page({
     wx.showLoading({
       title: '正在获取信息',
     })
-    const userId = 'user0123456';
 
     new Promise((resolve, reject) => {
       wx.login({
@@ -82,7 +82,6 @@ Page({
           success: (res) => {
             if (res && res.data && res.data.result) {
               this.openid = res.data.result.openid;
-              var app = getApp();
               app.globalData.openid = this.openid;
               resolve();
             } else {
@@ -98,7 +97,7 @@ Page({
       return new Promise((resolve, reject) => {
         wx.request({
           url: config.serverUrl + '/api/live/userSig',
-          data: { userId: userId },
+          data: { userId: app.globalData.openid },
           success: function (res) {
             console.log(res.data.result);
             resolve(res.data.result);
@@ -112,7 +111,7 @@ Page({
     }).then((info) => {
       console.log(this.openid);
       const options = {
-        userID: userId,
+        userID: app.globalData.openid,
         userSig: info.userSig,
         sdkAppID: info.sdkAppId,
         accType: info.accountType,
@@ -120,23 +119,10 @@ Page({
       }
 
       getApp().globalData.options = options;
-      console.log(options);
-    //   return new Promise((resolve, reject) => {
-    //     rtcroom.login({
-    //       data: options,
-    //       success: (res) => {
-    //         console.log(res);
-    //         resolve();
-    //       },
-    //       fail: (error) => {
-    //         reject(error);
-    //       }
-    //     });
-    //   });
-    // }).then(() => {
+
       wx.hideLoading();
       wx.navigateTo({
-        url: '../realstream/realstream',
+        url: '../login/login',
       });
     }).catch((error) => {
       console.log(error);

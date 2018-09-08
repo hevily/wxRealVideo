@@ -1,5 +1,6 @@
 // pages/pdf/pdf.js
 var config = require('../../config');
+var app = getApp();
 let touchs = [];
 Page({
 
@@ -32,6 +33,12 @@ Page({
     
     wx.request({
       url: config.serverUrl + '/api/live/files',
+      data: {
+        orderNo: app.globalData.orderNo
+      },
+      success:(res) => {
+        console.log(res.data.result);
+      }
     })
   },
 
