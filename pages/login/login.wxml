@@ -1,0 +1,35 @@
+<!--pages/login/login.wxml-->
+<view class='page'>
+  <form bindsubmit="formSubmit" bindreset="formReset">
+    <view class="weui-cells" style='margin-top: 30rpx;' >
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">姓名</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder=""/>
+        </view>
+      </view>
+      <view class="weui-cell weui-cell_input">
+        <view class="weui-cell__hd">
+          <view class="weui-label">车牌号码</view>
+        </view>
+        <view class="weui-cell__bd">
+          <input class="weui-input" placeholder=""/>
+        </view>
+      </view>
+    </view>
+    <view class="page__bd page__bd_spacing">
+      <button class="weui-btn" type="primary" style='margin-top: 30rpx;' formType="submit">提交</button>
+    </view>
+  </form>
+  <live-player auto src="http://29844.liveplay.myqcloud.com/live/29844_0a2c6addf48628f82dc609ecca497bdb.m3u8"></live-player>
+  <view class="weui-msg__extra-area">
+            <view class="weui-footer">
+                <view class="weui-footer__links">
+                    <navigator url="" class="weui-footer__link">PICC中国</navigator>
+                </view>
+                <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view>
+            </view>
+        </view>
+</view>

@@ -1,0 +1,42 @@
+<!--pages/pdf/pdf.wxml-->
+<view class='section'>
+  <scroll-view scroll-y="true">
+    <image mode='widthFix' src="{{filepath}}"></image>
+  </scroll-view>
+  <view class='siginFrame' wx:if="{{!isSingin}}">
+    <view class='bottonFrame'>
+      <button type='submit' class='weui-form-preview__btn weui-form-preview__btn_primary' lang="zh_CN" bindtap='sigin'>开始签名</button>
+    </view>
+  </view>
+</view>
+<view class='siginView' wx:if="{{isSingin}}">
+  <view class="noSiginFrame">
+    <view class='titleFrame'>签名区</view>
+    <canvas id="siginCanvas"
+      canvas-id="siginCanvas"
+      bindtouchmove='move'
+      bindtouchstart='start'
+      bindtouchend='end'
+      bindtouchcancel='cancel'
+      bindlongtap='tap'
+      disable-scroll='true'
+      binderror='error'>
+    </canvas>
+    <view class='bottonFrame'>
+      <button class='weui-form-preview__btn weui-form-preview__btn_default' lang="zh_CN" bindtap='back'>返回</button>
+      <button class='weui-form-preview__btn weui-form-preview__btn_default' lang="zh_CN" bindtap='clear'>清除</button>
+      <button type='submit' class='weui-form-preview__btn weui-form-preview__btn_primary' lang="zh_CN" bindtap='mixinFile'>生成签名</button>
+    </view>
+  </view>
+</view>
+<view class='display-view' wx:if="{{showDist}}">
+  <view class='content'>
+    <canvas id='distCanvas' canvas-id="distCanvas">
+    </canvas>
+  </view>
+  <view class='bottonFrame'>
+    <button class='weui-form-preview__btn weui-form-preview__btn_default' lang="zh_CN" bindtap='showCancel'>返回</button>
+    <button class='weui-form-preview__btn weui-form-preview__btn_default' lang="zh_CN" bindtap='nextOne'>继续</button>
+    <button type='submit' class='weui-form-preview__btn weui-form-preview__btn_primary' lang="zh_CN" bindtap='ok'>确定</button>
+  </view>
+</view>

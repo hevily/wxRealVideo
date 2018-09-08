@@ -1,0 +1,13 @@
+<!--pages/main/main.wxml-->
+<view class='section'>
+  <image class='bgImg' src="../Resources/bg.jpg"></image>
+  <image class='startEngine' bindtap='bindGetUserInfo' src="../Resources/startEngine.png"></image>
+  <view class="weui-msg__extra-area">
+    <view class="weui-footer">
+      <view class="weui-footer__links">
+        <navigator url="" class="weui-footer__link">PICC中国</navigator>
+      </view>
+      <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view>
+    </view>
+  </view>
+</view>

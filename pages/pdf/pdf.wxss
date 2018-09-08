@@ -1,0 +1,78 @@
+/* pages/pdf/pdf.wxss */
+.section {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100vh;
+  background-color: #fff;
+
+}
+scroll-view {
+  width: 100%;
+  background-color: #f1f2f3;
+  height: calc(100vh - 46px);
+}
+scroll-view image {
+  width: 100%;
+}
+
+.noSiginFrame {
+  position: fixed;
+  width: 100%;
+  left: 0;
+  bottom: 0;
+}
+.noSiginFrame .titleFrame {
+  width: 100%;
+  height: 80rpx;
+  line-height: 80rpx;
+  text-align: center;
+  font-size: 18px;
+  color: #888;
+  background-color: #fff;
+}
+#siginCanvas {
+  width: 100%;
+  height: 360rpx;
+  background-color: #f1f2f3;
+}
+.display-view .content {
+  width: 100%;
+  height: calc(100vh - 46px);
+  background-color: #f1f2f3;
+}
+
+#distCanvas {
+  width: 100%;
+  height: calc(100vh - 46px);
+  background-color: #f1f2f3;
+}
+
+.bottonFrame {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  bottom: 0;
+  background-color: #fff;
+  z-index: 10;
+}
+
+.display-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 20;
+}
+
+.siginView {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+}

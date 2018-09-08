@@ -1,0 +1,21 @@
+{
+  "pages": [
+    "pages/main/main",
+    "pages/pdf/pdf",
+    "pages/login/login",
+    "pages/feedback/feedback",
+    "pages/webrtcroom/roomlist/roomlist",
+    "pages/webrtcroom/roomname/roomname",
+    "pages/webrtcroom/room/room",
+    "pages/realstream/realstream"
+  ],
+  "networkTimeout": {
+    "request": 60000
+  },
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "PICC在线理赔",
+    "navigationBarTextStyle": "black"
+  }
+}

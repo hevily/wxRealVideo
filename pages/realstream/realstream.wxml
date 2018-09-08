@@ -1,0 +1,34 @@
+<view class='container-box'>
+  <webrtc-room id="webrtcroom"
+      roomID="{{roomID}}"
+      userID="{{userID}}"
+      userSig="{{userSig}}"
+      sdkAppID="{{sdkAppID}}"
+      privateMapKey="{{privateMapKey}}"
+      template="1v1"
+      beauty="{{beauty}}"
+      muted="{{muted}}"
+      debug="{{debug}}"
+      bindRoomEvent="onRoomEvent"
+      enableIM="{{enableIM}}"
+      bindIMEvent="onIMEvent">
+  </webrtc-room>
+  <view class="operate">
+      <view class="img-box">
+          <image src="/pages/Resources/video-off.png" bindtap="togglePlay"></image>
+          <text>停止</text>
+      </view>
+      <view class="img-box">
+          <image src="/pages/Resources/video-transform.png" bindtap="changeCamera"></image>
+          <text>翻转</text>
+      </view>
+      <view class="img-box">
+          <image src="/pages/Resources/{{muted ? 'volume-off' : 'volume-on'}}.png" bindtap="changeMute"></image>
+          <text>声音</text>
+      </view>
+      <view class="img-box">
+          <image src="/pages/Resources/file.png" bindtap="showFile"></image>
+          <text>文件</text>
+      </view>
+  </view>
+</view>
