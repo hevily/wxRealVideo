@@ -59,7 +59,7 @@ Page({
     if (nowTime - this.data.tapTime < 1000) {
       return;
     }
-    if (e.currentTarget.dataset.num > 3) {
+    if (e.currentTarget.dataset.serviceStatus) {
       wx.showModal({
         title: '提示',
         content: '房间人数已满',
@@ -68,8 +68,8 @@ Page({
       });
       return;
     }
+    console.log(e.currentTarget.dataset.roomid);
     const globaData = getApp().globalData;
-  console.log(e.currentTarget.dataset.roomid);
     const userName = globaData.userName;
     const userContact = globaData.userContact || '13800000001';
     const carNo = globaData.carNo;

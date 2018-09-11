@@ -3,7 +3,7 @@
   <view class='no-room' wx-if="{{!files.length}}">
     <view>暂无待签名文件</view>
   </view>
-  <view wx:for="{{files}}" class="list-box" bindtap="tapFile" data-fileId="{{item.fileId}}" data-fileName="{{item.fileName}}" data-signType="{{item.signType}}" data-imageUrl="{{item.imageUrl}}"> 
+  <view wx:for="{{files}}" wx:key="{{index}}" class="list-box" bindtap="goSigin" data-fileId="{{item.fileId}}" data-fileName="{{item.fileName}}" data-signType="{{item.signType}}" data-signStatus="{{item.signStatus}}" data-imageUrl="{{item.imageUrl}}"> 
     <view class='item'>
       <view class='content-left'>
         <view class='item-title' wx:if="{{item.signType === '1'}}">
@@ -15,14 +15,14 @@
         <view class='item-title' wx:else>实物赔付确认书</view>
         <view class='item-detail'>
           <image class='icon-user' src='../../Resources/user.png'></image>
-          <view>{{item.fileName}}</view>
+          <view>{{item.serviceName}}</view>
           <image class='icon-date' src='../../Resources/date.png'></image>
-          <view>{{item.date}}</view>
+          <view>{{item.createTime}}</view>
         </view>
       </view>
       <view class='content-right'>
-        <view class='flex-center' wx:if="{{item-sigin}}">
-          <image class='sigin-status' src='../../Resources/signed.png'></image>
+        <view class='flex-center' wx:if="{{item.signStatus === 1}}">
+          <image class='sigin-status' src='../../Resources/sigined.png'></image>
           <view class='item-sigin sigined'>已签</view>
         </view>
         <view class='flex-center' wx:else>

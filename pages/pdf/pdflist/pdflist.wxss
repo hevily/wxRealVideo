@@ -8,9 +8,9 @@
   display: flex;
   flex-direction: row;
   align-items: center;
-  justify-content: space-around;
+  justify-content: space-between;
   width: 100vw;
-  height: 112rpx;
+  height: 130rpx;
   font-size: 26rpx;
   border-bottom: 1px solid #f1f2f3;
 }
@@ -32,16 +32,26 @@
 .item-detail {
   display: flex;
   justify-content: left;
-  align-items: left;
+  align-items: center;
   color: #bfbfbf;
+  margin-right: 30rpx;
 }
 .item-detail image {
   margin-right: 10rpx;
+}
+.item-detail view {
+  margin-right: 20rpx;
 }
 .btn-center {
   margin-bottom:40rpx;
   margin-left: 228rpx;
   font-size: 30rpx;
+}
+.content-left {
+  margin-left: 30rpx;
+}
+.content-right {
+  margin-right: 30rpx;
 }
 
 .no-room {
@@ -62,10 +72,12 @@
 .sigin-status {
   width: 41rpx;
   height: 41rpx;
+  margin-bottom: 5rpx;
+  font-size: 24rpx;
 }
 .sigined {
-  color: #e8340c;
+  color: #16c390;
 }
 .un-sigined {
-  color: #bfbfbf;
+  color: #e8340c;
 }

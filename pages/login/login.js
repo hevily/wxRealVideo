@@ -10,7 +10,12 @@ Page({
    */
   data: {
     name: '',
-    carNo: ''
+    carNo: '',
+    array: [
+      '鄂','京','津','沪','渝','蒙','新','藏',
+      '宁','桂','港','澳','黑','吉','辽','晋',
+      '冀','鲁','豫','苏','皖','浙','闽','赣',
+      '湘','粤','琼','甘','陕','贵','云','川'],
   },
 
   /**
@@ -61,6 +66,13 @@ Page({
   
   },
 
+  bindPickerChange: function (e) {
+    console.log('picker发送选择改变，携带值为', e.detail.value)
+    this.setData({
+      index: e.detail.value
+    })
+  },
+
   nameInputEvent: function (e) {
     console.log(e);
     this.setData({
@@ -76,6 +88,13 @@ Page({
   },
 
   formSubmit: function (e) {
+    wx.navigateTo({
+      // url: '../webrtcroom/roomlist/roomlist',
+      url: '../pdf/pdflist/pdflist',
+    });
+    return;
+
+
     app.globalData.userName = this.data.name;
     // const userContact = '13800000001';
     app.globalData.carNo = this.data.carNo;
@@ -152,25 +171,11 @@ Page({
       })
     }).catch((error) => {
       console.log(error);
+      wx.hideLoading();
+      wx.showToast({
+        title: '获取信息失败',
+      });
     });
-    
-    // const seatNo = 'seat123456';
-    // const openid = getApp().globalData.openid;
-    // const options = {
-    //   userName: userName || '张三',
-    //   userContact: userContact || '13800000001',
-    //   carNo: carNo || '',
-    //   openid: openid,
-    //   seatNo: seatNo || 'seat123456',
-    // };
-
-    // wx.showLoading({
-    //   title: '正在等待接通',
-    // })
-    // socketStomp.startSocket(options);
-  
-   
-    console.log('form发生了submit事件，携带数据为：', e.detail.value)
   },
 
   /**

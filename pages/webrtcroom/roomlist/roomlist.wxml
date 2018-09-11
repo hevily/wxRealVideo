@@ -3,11 +3,11 @@
     <view>当前没有坐席在线</view>
     <view>在线时间：工作日 9:00-18:00</view>
   </view>
-  <view wx:for="{{roomList}}" class="list-box" bindtap="goRoom" data-roomid="{{item.userNo}}" data-roomname="{{item.username}}" data-roomcreator="{{item.createUser}}"> 
+  <view wx:for="{{roomList}}" class="list-box" bindtap="goRoom" data-roomid="{{item.userNo}}" data-roomname="{{item.username}}" data-roomcreator="{{item.createUser}}" data-servicestatus="{{item.serviceStatus}}"> 
     <view class='item'>
         <view class='item-no'>客服编号: {{item.userNo}}</view>
-        <view class='item-name'>客服姓名: {{item.username}}</view>
-        <view wx:if="{{item-status}}">
+        <view class='item-name'>客服姓名: {{item.serviceName}}</view>
+        <view wx:if="{{item.serviceStatus === '1'}}">
           <view class='item-status'>忙碌</view>
         </view>
         <view wx:else>

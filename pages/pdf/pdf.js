@@ -1,5 +1,6 @@
 // pages/pdf/pdf.js
 var config = require('../../config');
+var upng = require('../../utils/UPNG.js');
 var app = getApp();
 let touchs = [];
 Page({
@@ -20,7 +21,8 @@ Page({
     isSingin: false,
     isThird: false,
     showDist: false,
-    prevewImg: null,
+    signFile1: '',
+    signFIle2: '',
     selectedFile: {
       fileId: '',
       fileName: '',
@@ -33,7 +35,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    console.log(options);
+    this.setData({
+      selectedFile: options
+    });
   },
 
   canvasIdErrorCallback: function (e) {
@@ -108,14 +113,15 @@ Page({
       width: that.data.imgWidth,
       height: that.data.imgHeight,
       success(res) {
-        let base64 = wx.arrayBufferToBase64(res.data.buffer);
-        console.log(base64);
+        // 3. png编码
+        let pngData = upng.encode([res.data.buffer], res.width, res.height)
+        // 4. base64编码
+        let base64 = wx.arrayBufferToBase64(pngData); //'data:image/jpeg;base64,' +
         wx.request({
           url: config.serverUrl + '/api/live/uploadSignPicture',
           method: 'POST',
           data: {
             base64Url: base64,
-            prevewImg: 'data:image/jpg;base64,' + base64,
             fileId: that.data.selectedFile.fileId,
             fileName: that.data.selectedFile.fileName
           },
@@ -146,24 +152,15 @@ Page({
   },
   nextOne: function() {
     const that = this;
-    wx.canvasGetImageData({
-      canvasId: 'distCanvas',
-      x: 0,
-      y: 0,
-      width: this.data.imgWidth,
-      height: this.data.imgHeight,
-      success(res) {
-        console.log(res);
-        let base64 = wx.arrayBufferToBase64(res.data.buffer)
-        that.setData({
-          isThird: true,
-          selectedFile: {
-            // imageUrl: 'data:image/jpg;base64,' + base64,
-          },
-          showDist: true
-        });
-        touchs = [];
-        that.clear();
+    wx.canvasToTempFilePath({
+      canvasId: 'siginCanvas',
+      success: function (res) {
+        const tempPath = res.tempFilePath;
+        const scaleRate = 0.2;
+        const width = that.data.windowWidth * scaleRate;
+        const height = width / 750 * 360;
+
+        that.data.signFile1 = tempPath;
       }
     });
   },
@@ -184,7 +181,7 @@ Page({
     this.setData({ showDist: false });
   },
   back: function() {
-    this.setData({ isSingin: false } );
+    this.setData({ showDist: false, isSingin: false } );
     touchs = [];
   },
   getSignOffset: function (signType, imgW, imgHeight) {
@@ -213,7 +210,6 @@ Page({
   },
   mixinFile: function() {
     this.setData({ showDist: true })
-    const ctx = wx.createCanvasContext('distCanvas');
     const that = this;
     wx.canvasToTempFilePath({
       canvasId: 'siginCanvas',
@@ -222,6 +218,8 @@ Page({
         const scaleRate = 0.2;
         const width = that.data.windowWidth * scaleRate;
         const height = width / 750 * 360;
+
+        that.data.signFile1 = tempPath;
         wx.getImageInfo({
           src: that.data.selectedFile.imageUrl,
           success: function (res) {
@@ -234,6 +232,7 @@ Page({
               imgHeight: imgHeight,
             });
 
+            const ctx = wx.createCanvasContext('distCanvas');
             ctx.drawImage(that.data.selectedFile.imageUrl, 0, 0, imgW, imgHeight);
             //设置保存的图片
             ctx.drawImage(tempPath, offsets.offsetW, offsets.offsetH, width * that.data.pixelRatio, height * that.data.pixelRatio);

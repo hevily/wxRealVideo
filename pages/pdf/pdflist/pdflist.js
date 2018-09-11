@@ -17,13 +17,13 @@ Page({
   onLoad: function (options) {
     console.log(config);
     var that = this;
-    if (!app.globalData.orderNo) {
-      return;
-    }
+    // if (!app.globalData.orderNo) {
+    //   return;
+    // }
     wx.request({
       url: config.serverUrl + '/api/live/files',
       data: {
-        orderNo: app.globalData.orderNo
+        orderNo: app.globalData.orderNo || 'PICC2018091110510119376' 
       },
       success: (res) => {
         const files = res.data.result;
@@ -82,6 +82,20 @@ Page({
   back: function() {
     wx.navigateBack({
       delta: 1
+    });
+  },
+
+  goSigin: function(e) {
+    console.log(e.currentTarget.dataset);
+    if (e.currentTarget.dataset.signstatus === 1) {
+      wx.showToast({
+        title: '文件已签名',
+      });
+      return;
+    }
+    const { fileid, filename, imageurl, signtype} = e.currentTarget.dataset;
+    wx.navigateTo({
+      url: '../pdf?fileId=' + fileid + '&fileName=' + filename + '&imageUrl=' + imageurl + '&signType=' + signtype
     });
   },
 

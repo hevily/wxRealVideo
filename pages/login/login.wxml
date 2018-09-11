@@ -7,7 +7,7 @@
           <view class="weui-label">姓名</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="" bindblur="nameInputEvent" />
+          <input class="weui-input" placeholder="请输入姓名" bindblur="nameInputEvent" />
         </view>
       </view>
       <view class="weui-cell weui-cell_input">
@@ -15,7 +15,10 @@
           <view class="weui-label">车牌</view>
         </view>
         <view class="weui-cell__bd">
-          <input class="weui-input" placeholder="" bindblur="carNoInputEvent"/>
+          <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
+            <view class="picker">选择:{{array[index]}}</view>
+          </picker>
+          <input class="weui-input" placeholder="请输入车牌号码" bindblur="carNoInputEvent"/>
         </view>
       </view>
     </view>
