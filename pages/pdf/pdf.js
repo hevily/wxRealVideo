@@ -21,8 +21,9 @@ Page({
     isSingin: false,
     isThird: false,
     showDist: false,
-    signFile1: '',
-    signFIle2: '',
+    drawImgUrl: '',
+    siginFile1: '',
+    siginFile2: '',
     selectedFile: {
       fileId: '',
       fileName: '',
@@ -37,7 +38,8 @@ Page({
   onLoad: function (options) {
     console.log(options);
     this.setData({
-      selectedFile: options
+      selectedFile: options,
+      drawImgUrl: options.imageUrl
     });
   },
 
@@ -154,16 +156,22 @@ Page({
     })
   },
   nextOne: function() {
+    this.setData({
+      showDist: false,
+      isSingin: true,
+      isThird: true
+    });
+    this.clear();
+    touchs = [];
+
     const that = this;
     wx.canvasToTempFilePath({
-      canvasId: 'siginCanvas',
+      canvasId: 'distCanvas',
       success: function (res) {
         const tempPath = res.tempFilePath;
-        const scaleRate = 0.2;
-        const width = that.data.windowWidth * scaleRate;
-        const height = width / 750 * 360;
-
-        that.data.signFile1 = tempPath;
+        that.setData({
+          drawImgUrl: tempPath
+        });
       }
     });
   },
@@ -187,20 +195,20 @@ Page({
     this.setData({ showDist: false, isSingin: false } );
     touchs = [];
   },
-  getSignOffset: function (signType, imgW, imgHeight) {
+  getSignOffset: function (signType, imgW, imgHeight, isThird) {
     console.log(signType);
     const offsetH = (imgHeight - 60) * this.data.pixelRatio;
     let offsetW = 0;
     if (signType === 1) {
       offsetW = (imgW - 120) * this.data.pixelRatio;
     } else if (signType === 2) {
-      if (this.data.isThird) {
+      if (isThird) {
         offsetW = (imgW - 80) * this.data.pixelRatio;
       } else {
         offsetW = (imgW / 2 - 30) * this.data.pixelRatio;
       }
     } else if (signType === 3) {
-      if (this.data.isThird) {
+      if (isThird) {
         offsetW = (imgW/2 + 30) * this.data.pixelRatio;
       } else {
         offsetW = 60 * this.data.pixelRatio;
@@ -212,7 +220,10 @@ Page({
     }
   },
   mixinFile: function() {
-    this.setData({ showDist: true })
+    this.setData({ showDist: true });
+    this.clear();
+    
+    const ctx = wx.createCanvasContext('distCanvas');
     const that = this;
     wx.canvasToTempFilePath({
       canvasId: 'siginCanvas',
@@ -221,25 +232,32 @@ Page({
         const scaleRate = 0.2;
         const width = that.data.windowWidth * scaleRate;
         const height = width / 750 * 360;
-
-        that.data.signFile1 = tempPath;
         wx.getImageInfo({
           src: that.data.selectedFile.imageUrl,
           success: function (res) {
             console.log(res);
             const imgHeight = res.height / res.width * 375 * that.data.pixelRatio;
             const imgW = 375 * that.data.pixelRatio;
-            const offsets = that.getSignOffset(that.data.selectedFile.signType, imgW, imgHeight);
+
             that.setData({
               imgWidth: imgW,
               imgHeight: imgHeight,
             });
-
-            const ctx = wx.createCanvasContext('distCanvas');
+            
             ctx.drawImage(that.data.selectedFile.imageUrl, 0, 0, imgW, imgHeight);
             //设置保存的图片
-            ctx.drawImage(tempPath, offsets.offsetW, offsets.offsetH, width * that.data.pixelRatio, height * that.data.pixelRatio);
+            if (that.data.isThird) {
+              const offsets1 = that.getSignOffset(that.data.selectedFile.signType, imgW, imgHeight, true);
+              ctx.drawImage(tempPath, offsets1.offsetW, offsets1.offsetH, width * that.data.pixelRatio, height * that.data.pixelRatio);
+              const offsets = that.getSignOffset(that.data.selectedFile.signType, imgW, imgHeight, false);
+              ctx.drawImage(that.data.siginFile1, offsets.offsetW, offsets.offsetH, width * that.data.pixelRatio, height * that.data.pixelRatio);
+            } else {
+              that.data.siginFile1 = tempPath;
+              const offsets = that.getSignOffset(that.data.selectedFile.signType, imgW, imgHeight, false);
+              ctx.drawImage(that.data.siginFile1, offsets.offsetW, offsets.offsetH, width * that.data.pixelRatio, height * that.data.pixelRatio);
+            }
             ctx.draw();
+            
           }
         })
       }
