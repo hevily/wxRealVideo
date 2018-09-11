@@ -63,7 +63,7 @@ Page({
     if (nowTime - this.data.tapTime < 1000) {
       return;
     }
-    if (e.currentTarget.dataset.serviceStatus == '1') {
+    if (e.currentTarget.dataset.servicestatus == '1') {
       wx.showModal({
         title: '提示',
         content: '坐席忙碌请切换坐席或刷新等待',

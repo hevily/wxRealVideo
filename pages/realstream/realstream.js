@@ -81,10 +81,6 @@ Page({
     });
   },
   changeMute: function () {
-    var rtcroomCom = this.selectComponent('#webrtcroom');
-    if (rtcroomCom) {
-      rtcroomCom.changeMute();
-    }
     this.data.muted = !this.data.muted;
     this.setData({
       muted: this.data.muted
