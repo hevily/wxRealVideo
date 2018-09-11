@@ -47,4 +47,25 @@
 .bottom-btn button {
    background-color: #006eff;
    border-radius: 50px;
- }
+}
+
+.cover-view {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: 20;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  background-color: #fff;
+  flex-direction: column;
+}
+
+.cover-view image {
+  display: block;
+  width: 120rpx;
+  height: 120rpx;
+  margin-bottom: 30rpx;
+}

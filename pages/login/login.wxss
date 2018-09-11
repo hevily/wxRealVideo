@@ -1,15 +1,15 @@
 /* pages/login/login.wxss */
 .select_city {
-  width: 60rpx;
+  width: 60px;
 }
 
 .btn-login {
-  margin-top: 25px;
+  margin-top: 30px;
   width: 100%;
 }
 
 .weui-input {
-  font-size: 30rpx;
+  font-size: 15px;
 }
 .weui-cell_input {
   padding: 5px 15px;
@@ -17,4 +17,11 @@
 
 .weui-label {
   width: 80px;
+}
+
+.picker {
+  padding-right: 30px;
+  margin-right: 10px;
+  background: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgEAYAAAAj6qa3AAAABGdBTUEAALGPC/xhBQAAAAFzUkdCAK7OHOkAAAAgY0hSTQAAeiYAAICEAAD6AAAAgOgAAHUwAADqYAAAOpgAABdwnLpRPAAAAAZiS0dEAAAAAAAA+UO7fwAAAAlwSFlzAAAASAAAAEgARslrPgAAAK1JREFUaN7t0LENhSAQxnHIG+KGgBvAhsqFrGyxs3MN5yAxLsASMIHdWbzYv7wAmvj9GhKKy91fKQAAAAAAgBfSpQbZZJNNXSdBgoRhqLaw0067ZYkUKdK+PybAhZmZeRxFRETmudhgq6yy3sc1rnGdplJjP6UD5JxzzttGRER0HN/fvn/a4dUCFAtR+fDqAf4O0ejwZgF+DtH48NsZMWLE++u9ex8AAAAAAHiXE2FXbROib6VFAAAAJXRFWHRkYXRlOmNyZWF0ZQAyMDE4LTA5LTExVDIxOjIzOjEwKzA4OjAwsgqJWwAAACV0RVh0ZGF0ZTptb2RpZnkAMjAxOC0wOS0xMVQyMToyMzoxMCswODowMMNXMecAAABWdEVYdHN2ZzpiYXNlLXVyaQBmaWxlOi8vL2hvbWUvYWRtaW4vaWNvbi1mb250L3RtcC9pY29uX2R6YnVzcmRobmJsL2Fycm93JTIwZHJvcCUyMGRvd24uc3Zn684tswAAAABJRU5ErkJggg==') no-repeat right center;
+  background-size: 24px;
 }

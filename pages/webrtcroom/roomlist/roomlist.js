@@ -12,7 +12,11 @@ Page({
     userName: '',
     firstshow: true, // 第一次显示页面
     tapTime: '',
-    tapJoinRoom: false
+    tapJoinRoom: false,
+    ring: false,
+    ringContent: '正在等待接听',
+    interval: null,
+    ticks: 0,
   },
 
   // 拉取房间列表
@@ -59,10 +63,10 @@ Page({
     if (nowTime - this.data.tapTime < 1000) {
       return;
     }
-    if (e.currentTarget.dataset.serviceStatus) {
+    if (e.currentTarget.dataset.serviceStatus == '1') {
       wx.showModal({
         title: '提示',
-        content: '房间人数已满',
+        content: '坐席忙碌请切换坐席或刷新等待',
         showCancel: false,
         complete: function () { }
       });
@@ -83,24 +87,41 @@ Page({
       seatNo: seatNo || 'seat123456',
     };
 
-    wx.showLoading({
-      title: '正在等待接通',
+    this.setData({
+      ring: true,
     })
     socketStomp.startSocket(options);
+    this.data.interval = setInterval(() => {
+      this.data.ticks ++;
+      let dots = '';
+      switch (this.data.ticks % 4) {
+        case 0:
+          dots = '';
+          break;
+        case 1:
+          dots = '.';
+          break;
+        case 2:
+          dots = '..';
+          break;
+        case 3:
+          dots = '...';
+          break;
+        default:
+          dots = '';
+      }
+      this.setData({
+        ringContent: '正在等待接听' + dots
+      });
 
-    // var url = '../room/room?roomID=' + e.currentTarget.dataset.roomid + '&roomName=' + e.currentTarget.dataset.roomname + '&userName=' + this.data.userName + '&roomCreator=' + globalOptions.userID;// e.currentTarget.dataset.roomcreator;
-    // if (!this.data.tapJoinRoom) { // 如果没有点击进入房间
-    //   this.data.tapJoinRoom = true;
-    //   wx.navigateTo({
-    //     url: url,
-    //     complete: () => {
-    //       this.data.tapJoinRoom = false; // 不管成功还是失败，重置tapJoinRoom
-    //     }
-    //   });
-    // }
-    // this.setData({
-    //   'tapTime': nowTime
-    // });
+      if (this.data.ticks >= 30) {
+        this.setData({
+          ring: false
+        });
+        clearInterval(this.data.interval);
+        this.data.interval = null;
+      }
+    }, 1000);
   },
 
   compareVersion: function (v1, v2) {
@@ -134,9 +155,6 @@ Page({
 	 */
   onLoad: function (options) {
     var app = getApp();
-    // console.log(app.globalData);
-    // socketStomp.initConnect(app.globalData.openid);
-    // socketStomp.sendRequestVedio(app.globalData.openid);
     const openid = getApp().globalData.openid;
     socketStomp.initConnect(openid, (content) => {
       const reply = content.reply;
@@ -196,7 +214,17 @@ Page({
 	 * 生命周期函数--监听页面隐藏
 	 */
   onHide: function () {
+    this.cancelCall();
+  },
 
+  cancelCall: function() {
+    if (this.data.interval) {
+      clearInterval(this.data.interval);
+      this.data.interval = null;
+    }
+    this.setData({
+      ring: false
+    });
   },
 
 	/**

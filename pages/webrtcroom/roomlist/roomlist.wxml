@@ -3,18 +3,24 @@
     <view>当前没有坐席在线</view>
     <view>在线时间：工作日 9:00-18:00</view>
   </view>
-  <view wx:for="{{roomList}}" class="list-box" bindtap="goRoom" data-roomid="{{item.userNo}}" data-roomname="{{item.username}}" data-roomcreator="{{item.createUser}}" data-servicestatus="{{item.serviceStatus}}"> 
+  <view wx:for="{{roomList}}" wx:key="{{index}}" class="list-box" bindtap="goRoom" data-roomid="{{item.userNo}}" data-roomname="{{item.username}}" data-roomcreator="{{item.createUser}}" data-servicestatus="{{item.serviceStatus}}"> 
     <view class='item'>
         <view class='item-no'>客服编号: {{item.userNo}}</view>
         <view class='item-name'>客服姓名: {{item.serviceName}}</view>
-        <view wx:if="{{item.serviceStatus === '1'}}">
+        <view wx:if="{{item.serviceStatus == '1'}}">
           <view class='item-status'>忙碌</view>
         </view>
         <view wx:else>
           <view class='item-status item-online'>空闲</view>
         </view>
     </view>
-  </view> 
+  </view>
+</view>
+<view class='cover-view' wx:if="{{ring}}">
+  <view bindtap='cancelCall'>
+    <image src='../../Resources/video-off.png'></image>
+  </view>
+  <view>{{ringContent}}</view>
 </view>
 <view class="weui-msg__extra-area">
   <view class="weui-footer">

@@ -24,6 +24,8 @@ Page({
     drawImgUrl: '',
     siginFile1: null,
     siginFile2: null,
+    interval: null,
+    distCtx: null,
     selectedFile: {
       fileId: '',
       fileName: '',
@@ -41,6 +43,7 @@ Page({
       selectedFile: options,
       drawImgUrl: options.imageUrl
     });
+    this.data.distCtx = wx.createCanvasContext('distCanvas');
   },
 
   canvasIdErrorCallback: function (e) {
@@ -210,27 +213,31 @@ Page({
   },
   mixinFile: function() {
     this.setData({ showDist: true });
-    const ctx = wx.createCanvasContext('distCanvas');
+    const ctx = this.data.distCtx;
     const that = this;
-    wx.canvasToTempFilePath({
-      canvasId: 'siginCanvas',
+    wx.getImageInfo({
+      src: that.data.selectedFile.imageUrl,
       success: function (res) {
-        const tempPath = res.tempFilePath;
-        const scaleRate = 0.2;
-        const width = that.data.windowWidth * scaleRate;
-        const height = width / 750 * 360;
-        wx.getImageInfo({
-          src: that.data.selectedFile.imageUrl,
-          success: function (res) {
-            console.log(res);
-            const imgHeight = res.height / res.width * 375 * that.data.pixelRatio;
-            const imgW = 375 * that.data.pixelRatio;
+        console.log(res);
+        const imgHeight = res.height / res.width * that.data.windowWidth * that.data.pixelRatio;
+        const imgW = that.data.windowWidth * that.data.pixelRatio;
 
-            that.setData({
-              imgWidth: imgW,
-              imgHeight: imgHeight,
-            });
-            
+        that.setData({
+          imgWidth: imgW,
+          imgHeight: imgHeight,
+        });
+
+        wx.canvasToTempFilePath({
+          canvasId: 'siginCanvas',
+          destWidth: res.width,
+          destHeight: res.height,
+          success: function (result) {
+            const tempPath = result.tempFilePath;
+            const scaleRate = 0.2;
+            const width = that.data.windowWidth * scaleRate;
+            const height = width / 750 * 360;
+            that.drawContext.clearRect(0, 0, that.data.windowWidth * that.data.pixelRatio, that.data.windowHeight * that.data.pixelRatio);
+
             ctx.drawImage(that.data.selectedFile.imageUrl, 0, 0, imgW, imgHeight);
             if (!that.data.siginFile1) {
               that.data.siginFile1 = tempPath;

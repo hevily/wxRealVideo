@@ -39,7 +39,7 @@ function initConnect(openid, callback) {
       const content = JSON.parse(data.content);
       callback && callback(content);
     });
-  })
+  });
 }
 
 function startSocket(options) {

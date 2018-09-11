@@ -89,12 +89,20 @@ Page({
   },
 
   submit: function (e) {
-    wx.navigateTo({
-      // url: '../webrtcroom/roomlist/roomlist',
-      url: '../pdf/pdflist/pdflist',
-    });
-    return;
-
+    if (!this.data.name ) {
+      wx.showToast({
+        title: '请输入姓名',
+        icon: 'none',
+      });
+      return;
+    }
+    if (!this.data.carNo) {
+      wx.showToast({
+        title: '请输入正确的车牌号码',
+        icon: 'none',
+      });
+      return;
+    }
 
     app.globalData.userName = this.data.name;
     // const userContact = '13800000001';
