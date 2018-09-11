@@ -53,7 +53,7 @@ Component({
     }, //设置码率范围为[minBitrate,maxBitrate]，四人建议设置为200~400
     maxBitrate: {
       type: Number,
-      value: 300
+      value: 400
     },
     muted: {
       type: Boolean,

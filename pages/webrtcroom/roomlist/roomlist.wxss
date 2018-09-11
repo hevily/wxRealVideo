@@ -1,30 +1,42 @@
 .container-box {
-  background:-webkit-gradient(linear, 0% 0%, 0% 80%,from(#061c36), to(#12161d));
+  background-color: #fff;
   height: calc(100vh - 70px);
   overflow: auto;
   padding-bottom: 70px;
 }
 .list-box {
-  background-color: #262626;
-  background-image:url(https://miniprogram-1252463788.file.myqcloud.com/multi_room_item_bg.png);
-  background-repeat:no-repeat;
-  background-size: 100% 100%;
-  color: #fff;
-  width: 88vw;
-  margin: 3vw;
-  padding: 3vw;
+  background-color: #fff;
+  width: 100vw;
+  color: #333;
 }
-.list-info {
-  font-size: 14px;
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100vw;
+  height: 112rpx;
+  font-size: 26rpx;
+  border-bottom: 1px solid #f1f2f3;
 }
-.extext {
-  font-size: 13px;
-  color: #ffffff;
-  padding: 5vw 0 2vw;
+.item .item-status {
+  width: 96rpx;
+  height: 44rpx;
   text-align: center;
+  line-height: 44rpx;
+  border-radius: 44rpx;
+  color: #fff;
+  background-color: #bfbfbf;
+}
+.item .item-online {
+  background-color: #e8340c;
+}
+.item-info {
+  font-size: 30rpx;
 }
 .no-room {
   padding-top: 30vh;
+  text-align:center;
 }
 .bottom-btn {
   position: fixed;

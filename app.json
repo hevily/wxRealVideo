@@ -7,7 +7,9 @@
     "pages/webrtcroom/roomlist/roomlist",
     "pages/webrtcroom/roomname/roomname",
     "pages/webrtcroom/room/room",
-    "pages/realstream/realstream"
+    "pages/realstream/realstream",
+    "pages/sigin/sigin",
+    "pages/pdf/pdflist/pdflist"
   ],
   "networkTimeout": {
     "request": 60000

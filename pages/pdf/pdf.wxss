@@ -48,6 +48,11 @@ scroll-view image {
   background-color: #f1f2f3;
 }
 
+.distImg {
+  width: 100%;
+  height: calc(100vh - 46px);
+}
+
 .bottonFrame {
   display: flex;
   justify-content: space-around;

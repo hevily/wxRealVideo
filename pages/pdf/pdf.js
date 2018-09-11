@@ -18,28 +18,22 @@ Page({
     windowHeight: 1206,
     distImg: null,
     isSingin: false,
+    isThird: false,
     showDist: false,
-    currentFileType: 1,
-    filename: '',
-    fileId: '',
-    filepath: '../Resources/pdf2.jpg',
+    prevewImg: null,
+    selectedFile: {
+      fileId: '',
+      fileName: '',
+      imageUrl: '',//'../Resources/pdf2.jpg',../Resources/sign_3.jpg
+      signType: 1
+    } // signType 1--委托维修协议 2--委托维修协议三者 3--实物
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    console.log(config);
     
-    wx.request({
-      url: config.serverUrl + '/api/live/files',
-      data: {
-        orderNo: app.globalData.orderNo
-      },
-      success:(res) => {
-        console.log(res.data.result);
-      }
-    })
   },
 
   canvasIdErrorCallback: function (e) {
@@ -57,9 +51,6 @@ Page({
           windowWidth: res.windowWidth,
           windowHeight: res.windowHeight
         })
-
-        console.log(res);
-        console.log(this.data);
       }
     })
   },
@@ -105,6 +96,9 @@ Page({
   },
   //保存图片
   ok: function () {
+    wx.showLoading({
+      title: '正在提交文件',
+    });
     console.log('save image');
     var that = this
     wx.canvasGetImageData({
@@ -114,36 +108,64 @@ Page({
       width: that.data.imgWidth,
       height: that.data.imgHeight,
       success(res) {
-        console.log(res);
-        // 3. png编码
-        // let pngData = upng.encode([res.data.buffer], res.width, res.height)
-        // 4. base64编码
-        let base64 = wx.arrayBufferToBase64(res.data.buffer)
-        that.setData({
-          distImg: 'data:image/jpg;base64,' + base64,
-        })
-
+        let base64 = wx.arrayBufferToBase64(res.data.buffer);
+        console.log(base64);
         wx.request({
           url: config.serverUrl + '/api/live/uploadSignPicture',
           method: 'POST',
           data: {
             base64Url: base64,
-            fileName: that.data.filename
+            prevewImg: 'data:image/jpg;base64,' + base64,
+            fileId: that.data.selectedFile.fileId,
+            fileName: that.data.selectedFile.fileName
           },
           success: function(res) {
+            wx.hideLoading();
             console.log(res);
+            if (res.statusCode === 200 ){
+              wx.showToast({
+                title: '提交成功'
+              });
+            } else {
+              wx.showToast({
+                title: res.data.message,
+              });
+            }
+          },
+          error(error) {
+            console.log(error);
+            wx.hideLoading();
           }
-        })
-        
-        // ...
+        });
       },
       error(error) {
         console.log(error);
+        wx.hideLoading();
       }
     })
   },
   nextOne: function() {
-    console.log()
+    const that = this;
+    wx.canvasGetImageData({
+      canvasId: 'distCanvas',
+      x: 0,
+      y: 0,
+      width: this.data.imgWidth,
+      height: this.data.imgHeight,
+      success(res) {
+        console.log(res);
+        let base64 = wx.arrayBufferToBase64(res.data.buffer)
+        that.setData({
+          isThird: true,
+          selectedFile: {
+            // imageUrl: 'data:image/jpg;base64,' + base64,
+          },
+          showDist: true
+        });
+        touchs = [];
+        that.clear();
+      }
+    });
   },
   sigin: function() {
     //获得Canvas的上下文
@@ -165,6 +187,30 @@ Page({
     this.setData({ isSingin: false } );
     touchs = [];
   },
+  getSignOffset: function (signType, imgW, imgHeight) {
+    console.log(signType);
+    const offsetH = (imgHeight - 60) * this.data.pixelRatio;
+    let offsetW = 0;
+    if (signType === 1) {
+      offsetW = (imgW - 120) * this.data.pixelRatio;
+    } else if (signType === 2) {
+      if (this.data.isThird) {
+        offsetW = (imgW - 80) * this.data.pixelRatio;
+      } else {
+        offsetW = (imgW / 2 - 30) * this.data.pixelRatio;
+      }
+    } else if (signType === 3) {
+      if (this.data.isThird) {
+        offsetW = (imgW/2 + 30) * this.data.pixelRatio;
+      } else {
+        offsetW = 60 * this.data.pixelRatio;
+      }
+    }
+    return {
+      offsetH: offsetH,
+      offsetW: offsetW
+    }
+  },
   mixinFile: function() {
     this.setData({ showDist: true })
     const ctx = wx.createCanvasContext('distCanvas');
@@ -177,20 +223,20 @@ Page({
         const width = that.data.windowWidth * scaleRate;
         const height = width / 750 * 360;
         wx.getImageInfo({
-          src: that.data.filepath,
+          src: that.data.selectedFile.imageUrl,
           success: function (res) {
+            console.log(res);
             const imgHeight = res.height / res.width * 375 * that.data.pixelRatio;
             const imgW = 375 * that.data.pixelRatio;
-            const offsetH = (imgHeight - 100) * that.data.pixelRatio;
-            const offsetW = 60 * that.data.pixelRatio;
+            const offsets = that.getSignOffset(that.data.selectedFile.signType, imgW, imgHeight);
             that.setData({
               imgWidth: imgW,
               imgHeight: imgHeight,
             });
 
-            ctx.drawImage(that.data.filepath, 0, 0, imgW, imgHeight);
+            ctx.drawImage(that.data.selectedFile.imageUrl, 0, 0, imgW, imgHeight);
             //设置保存的图片
-            ctx.drawImage(tempPath, offsetW, offsetH, width * that.data.pixelRatio, height * that.data.pixelRatio);
+            ctx.drawImage(tempPath, offsets.offsetW, offsets.offsetH, width * that.data.pixelRatio, height * that.data.pixelRatio);
             ctx.draw();
           }
         })

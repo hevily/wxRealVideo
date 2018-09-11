@@ -1,0 +1,44 @@
+/* pages/sigin/sigin.wxss */
+.section {
+  width: 100%;
+  height: 100vh;
+  background-color: #fff;
+}
+.content {
+  display: flex;
+  width: 100%;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.content .bg-box {
+  display: flex;
+  width: 100vw;
+  justify-content: flex-end;
+}
+.content .bg {
+  align-self: right;
+  width: 672rpx;
+  height: 465rpx;
+}
+.btn-video {
+  margin-bottom: 20rpx;
+}
+.phone-box {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  font-size: 30rpx;
+  height: 40rpx;
+  font-weight: bold;
+  color: #e8340c;
+  margin-top: 30rpx;
+  margin-bottom: 30rpx;
+}
+.phone-box .call {
+  width: 30rpx;
+  height: 30rpx;
+  margin-right: 15rpx;
+}

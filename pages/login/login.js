@@ -1,5 +1,6 @@
 var config = require('../../config.js');
 var socketStomp = require('../../utils/socketStomp');
+var app = getApp();
 
 // pages/login/login.js
 Page({
@@ -16,12 +17,6 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const openid = getApp().globalData.openid;
-    socketStomp.initConnect(openid, () => {
-      wx.navigateTo({
-        url: '../realstream/realstream',
-      });
-    });
   },
 
   /**
@@ -81,23 +76,99 @@ Page({
   },
 
   formSubmit: function (e) {
-    const userName = this.data.name;
-    const userContact = '13800000001';
-    const carNo = this.data.carNo;
-    const seatNo = 'seat123456';
-    const openid = getApp().globalData.openid;
-    const options = {
-      userName: userName || '张三',
-      userContact: userContact || '13800000001',
-      carNo: carNo || '',
-      openid: openid,
-      seatNo: seatNo || 'seat123456',
-    };
+    app.globalData.userName = this.data.name;
+    // const userContact = '13800000001';
+    app.globalData.carNo = this.data.carNo;
+    app.globalData.userContact = this.data.carNo;
 
     wx.showLoading({
-      title: '正在等待接通',
+      title: '正在获取信息',
     })
-    socketStomp.startSocket(options);
+
+    new Promise((resolve, reject) => {
+      wx.login({
+        success: function (res) {
+          console.log(res);
+          if (res.code) {
+            resolve(res.code);
+          } else {
+            reject(res.errMsg);
+          }
+        },
+        fail: function (error) {
+          console.log(error);
+          reject(error);
+        }
+      });
+    }).then((code) => {
+      return new Promise((resolve, reject) => {
+        wx.request({
+          url: config.serverUrl + '/api/wechat/getOpenId',
+          data: {
+            code: code
+          },
+          success: (res) => {
+            if (res && res.data && res.data.result) {
+              this.openid = res.data.result.openid;
+              app.globalData.openid = this.openid;
+              resolve();
+            } else {
+              reject('invalid response');
+            }
+          },
+          fail: (error) => {
+            reject(error);
+          }
+        })
+      });
+    }).then(() => {
+      return new Promise((resolve, reject) => {
+        wx.request({
+          url: config.serverUrl + '/api/live/userSig',
+          data: { userId: app.globalData.openid },
+          success: function (res) {
+            console.log(res.data.result);
+            resolve(res.data.result);
+          },
+          fail: function (error) {
+            console.log(error);
+            reject(error);
+          }
+        })
+      });
+    }).then((info) => {
+      console.log(this.openid);
+      const options = {
+        userID: app.globalData.openid,
+        userSig: info.userSig,
+        sdkAppID: info.sdkAppId,
+        accType: info.accountType,
+      }
+
+      getApp().globalData.options = options;
+      wx.hideLoading();
+      wx.navigateTo({
+        url: '../webrtcroom/roomlist/roomlist',
+      })
+    }).catch((error) => {
+      console.log(error);
+    });
+    
+    // const seatNo = 'seat123456';
+    // const openid = getApp().globalData.openid;
+    // const options = {
+    //   userName: userName || '张三',
+    //   userContact: userContact || '13800000001',
+    //   carNo: carNo || '',
+    //   openid: openid,
+    //   seatNo: seatNo || 'seat123456',
+    // };
+
+    // wx.showLoading({
+    //   title: '正在等待接通',
+    // })
+    // socketStomp.startSocket(options);
+  
    
     console.log('form发生了submit事件，携带数据为：', e.detail.value)
   },

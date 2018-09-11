@@ -25,6 +25,14 @@ Page({
     console.log("onLoad");
   },
 
+  onShow: function() {
+    setTimeout(() => {
+      wx.navigateTo({
+        url: '../sigin/sigin',
+      });
+    }, 1000);
+  },
+
   getPhoneNumber: function (e) {
     console.log(e.detail.errMsg)
     console.log(e.detail.iv)
@@ -51,81 +59,14 @@ Page({
   },
 
   bindGetUserInfo: function (e) {
-    console.log('here');
+    // wx.navigateTo({
+    //   url: '../pdf/pdf',
+    // });
+    // return;
+    // console.log('here');
     // this.startSocket(e.detail.userInfo.openId);
-    wx.showLoading({
-      title: '正在获取信息',
-    })
 
-    new Promise((resolve, reject) => {
-      wx.login({
-        success: function (res) {
-          console.log(res);
-          if (res.code) {
-            resolve(res.code);
-          } else {
-            reject(res.errMsg);
-          }
-        },
-        fail: function (error) {
-          console.log(error);
-          reject(error);
-        }
-      });
-    }).then((code) => {
-      return new Promise((resolve, reject) => {
-        wx.request({
-          url: config.serverUrl + '/api/wechat/getOpenId',
-          data: {
-            code: code
-          },
-          success: (res) => {
-            if (res && res.data && res.data.result) {
-              this.openid = res.data.result.openid;
-              app.globalData.openid = this.openid;
-              resolve();
-            } else {
-              reject('invalid response');
-            }
-          },
-          fail: (error) => {
-            reject(error);
-          }
-        })
-      });
-    }).then(() => {
-      return new Promise((resolve, reject) => {
-        wx.request({
-          url: config.serverUrl + '/api/live/userSig',
-          data: { userId: app.globalData.openid },
-          success: function (res) {
-            console.log(res.data.result);
-            resolve(res.data.result);
-          },
-          fail: function (error) {
-            console.log(error);
-            reject(error);
-          }
-        })
-      });
-    }).then((info) => {
-      console.log(this.openid);
-      const options = {
-        userID: app.globalData.openid,
-        userSig: info.userSig,
-        sdkAppID: info.sdkAppId,
-        accType: info.accountType,
-      }
-
-      getApp().globalData.options = options;
-
-      wx.hideLoading();
-      wx.navigateTo({
-        url: '../login/login',
-      });
-    }).catch((error) => {
-      console.log(error);
-    });
+    
   },
 
   /**

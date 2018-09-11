@@ -37,9 +37,7 @@ function initConnect(openid, callback) {
       const data = JSON.parse(res.body);
       // "{\"reply\":true,\"roomId\":1209,\"orderNo\":\"PICC2018090211153636798\"}"
       const content = JSON.parse(data.content);
-      app.globalData.options.roomID = content.roomId;
-      app.globalData.orderNo = content.orderNo;
-      callback && callback();
+      callback && callback(content);
     });
   })
 }

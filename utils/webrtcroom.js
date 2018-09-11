@@ -83,11 +83,14 @@ var webrtcroom = {
 
   getRoomList: function (index, count, success, fail) {
     var self = this;
-    self.request({
-      url: '/get_room_list',
+    wx.request({
+      url: config.serverUrl + '/api/sysConfig/customerServiceList',
       data: {
-        index: index,
-        count: count,
+        offSet: index,
+        pageSize: count,
+        shopGroupCode: 'PICC',
+        orderCondition: 'create_datetime',
+        orderDirection: 'desc'
       },
       success: success,
       fail: fail

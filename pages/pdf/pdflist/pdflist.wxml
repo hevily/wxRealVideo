@@ -1,0 +1,44 @@
+<!--pages/pdf/pdflist/pdflist.wxml-->
+<view class='container-box'>
+  <view class='no-room' wx-if="{{!files.length}}">
+    <view>暂无待签名文件</view>
+  </view>
+  <view wx:for="{{files}}" class="list-box" bindtap="tapFile" data-fileId="{{item.fileId}}" data-fileName="{{item.fileName}}" data-signType="{{item.signType}}" data-imageUrl="{{item.imageUrl}}"> 
+    <view class='item'>
+      <view class='content-left'>
+        <view class='item-title' wx:if="{{item.signType === '1'}}">
+          机动车保险事故车辆委托维修协议(二方协议)
+        </view>
+        <view class='item-title' wx:elif="{{item.signType === '2'}}">
+          机动车保险事故车辆委托维修三方协议(三方协议)
+        </view>
+        <view class='item-title' wx:else>实物赔付确认书</view>
+        <view class='item-detail'>
+          <image class='icon-user' src='../../Resources/user.png'></image>
+          <view>{{item.fileName}}</view>
+          <image class='icon-date' src='../../Resources/date.png'></image>
+          <view>{{item.date}}</view>
+        </view>
+      </view>
+      <view class='content-right'>
+        <view class='flex-center' wx:if="{{item-sigin}}">
+          <image class='sigin-status' src='../../Resources/signed.png'></image>
+          <view class='item-sigin sigined'>已签</view>
+        </view>
+        <view class='flex-center' wx:else>
+          <image class='sigin-status' src='../../Resources/no-sigin.png'></image>
+          <view class='item-sigin un-sigined'>未签</view>
+        </view>
+      </view>
+    </view>
+  </view> 
+</view>
+<view class="weui-msg__extra-area">
+  <view class="weui-footer">
+    <view class="weui-footer__links">
+      <view class='btn btn-center' bindtap='back'>返回通话</view>
+      <image class='logo' src='../../Resources/logo.png'></image>
+    </view>
+  </view>
+</view>
+

@@ -1,7 +1,7 @@
 <!--pages/pdf/pdf.wxml-->
 <view class='section'>
   <scroll-view scroll-y="true">
-    <image mode='widthFix' src="{{filepath}}"></image>
+    <image mode='widthFix' src="{{selectedFile.imageUrl}}"></image>
   </scroll-view>
   <view class='siginFrame' wx:if="{{!isSingin}}">
     <view class='bottonFrame'>

@@ -12,35 +12,27 @@
 .operate {
   position: fixed;
   display: flex;
+  width: 100%;
+  align-content: space-between;
   align-items: center;
   bottom: 3vw;
 }
 .img-box {
   position: relative;
   display:inline-block;
-  height: 10vh;
-  width: 13.6vw;
-  left:22.8vw;
+  width: 120rpx;
+  height: 100rpx;
   vertical-align: middle;
 }
-.img-box image {
+.img-box cover-image {
   position: absolute;
-  width: 8vw;
-  height: 8vw;
-  top: 1vh; 
-  left: 2.8vw;
+  width: 80rpx;
+  height: 80rpx;
 }
-.img-box image :active{
+.img-box cover-image :active{
   opacity:0.55;
 }
-.img-box text {
-  position: absolute;
-  color: #ffffff;
-  width: 100%;
-  font-size:10px;
-  top: 10vw;
-  text-align: center;
-}
+
 .operate {
   display: flex;
   justify-content: center;

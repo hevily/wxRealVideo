@@ -89,11 +89,12 @@ Page({
   showFile: function () {
     console.log('show file');
     wx.navigateTo({
-      url: '../pdf/pdf',
+      url: '../pdf/pdflist/pdflist',
     });
   },
 
   onLoad: function () {
+    wx.hideLoading();
     const options = getApp().globalData.options;
     console.log(options);
     var self = this;

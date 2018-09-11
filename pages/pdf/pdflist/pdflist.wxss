@@ -1,0 +1,71 @@
+/* pages/pdf/pdflist/pdflist.wxss */
+.list-box {
+  background-color: #fff;
+  width: 100vw;
+  color: #333;
+}
+.item {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-around;
+  width: 100vw;
+  height: 112rpx;
+  font-size: 26rpx;
+  border-bottom: 1px solid #f1f2f3;
+}
+.item .item-status {
+  width: 96rpx;
+  height: 44rpx;
+  text-align: center;
+  line-height: 44rpx;
+  border-radius: 44rpx;
+  color: #fff;
+  background-color: #bfbfbf;
+}
+.item .item-online {
+  background-color: #e8340c;
+}
+.item-info {
+  font-size: 30rpx;
+}
+.item-detail {
+  display: flex;
+  justify-content: left;
+  align-items: left;
+  color: #bfbfbf;
+}
+.item-detail image {
+  margin-right: 10rpx;
+}
+.btn-center {
+  margin-bottom:40rpx;
+  margin-left: 228rpx;
+  font-size: 30rpx;
+}
+
+.no-room {
+  padding-top: 30vh;
+  text-align: center;
+}
+.flex-center {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  text-align: center;
+  align-items: center;
+}
+.icon-user, .icon-date {
+  width: 28rpx;
+  height: 28rpx;
+}
+.sigin-status {
+  width: 41rpx;
+  height: 41rpx;
+}
+.sigined {
+  color: #e8340c;
+}
+.un-sigined {
+  color: #bfbfbf;
+}

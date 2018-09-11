@@ -1,13 +1,12 @@
 <!--pages/main/main.wxml-->
 <view class='section'>
-  <image class='bgImg' src="../Resources/bg.jpg"></image>
-  <image class='startEngine' bindtap='bindGetUserInfo' src="../Resources/startEngine.png"></image>
+  <image class='bgImg' src="../Resources/welcome.jpg"></image>
+  <image class='handle-title' bindtap='bindGetUserInfo' src="../Resources/handle-title.png"></image>
   <view class="weui-msg__extra-area">
     <view class="weui-footer">
       <view class="weui-footer__links">
-        <navigator url="" class="weui-footer__link">PICC中国</navigator>
+        <image class='logo' src='../Resources/logo.png'></image>
       </view>
-      <view class="weui-footer__text">Copyright © 2008-2016 PICC</view>
     </view>
   </view>
 </view>

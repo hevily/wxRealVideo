@@ -34,3 +34,20 @@ page{
     text-align: left;
     font-size: 14px;
 }
+
+.logo {
+  width: 332rpx;
+  height: 30rpx;
+  margin-bottom: 50rpx;
+}
+
+.btn {
+  width: 293rpx;
+  height: 70rpx;
+  border-radius: 70rpx;
+  text-align: center;
+  line-height: 70rpx;
+  color: #e8340c;
+  background-color: transparent;
+  border: 1px solid #e8340c;
+}

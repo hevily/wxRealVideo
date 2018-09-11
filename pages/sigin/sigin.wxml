@@ -1,0 +1,18 @@
+<!--pages/sigin/sigin.wxml-->
+<view class='section'>
+  <view class='content'>
+    <view class='bg-box'>
+      <image class='bg' src='../Resources/bg.png'></image>
+    </view>
+    <view class='btn btn-video' bindtap='getPhoneNumber'>视频报案</view>
+    <view class='phone-box'><image class='call' src='../Resources/call.png'></image>95518</view>
+  </view>
+  <view class="weui-msg__extra-area">
+    <view class="weui-footer">
+      <view class="weui-footer__links">
+        <image class='logo' src='../Resources/logo.png'></image>
+      </view>
+    </view>
+  </view>
+</view>
+

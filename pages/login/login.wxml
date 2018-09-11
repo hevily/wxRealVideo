@@ -12,7 +12,7 @@
       </view>
       <view class="weui-cell weui-cell_input">
         <view class="weui-cell__hd">
-          <view class="weui-label">车牌号码</view>
+          <view class="weui-label">车牌</view>
         </view>
         <view class="weui-cell__bd">
           <input class="weui-input" placeholder="" bindblur="carNoInputEvent"/>
@@ -23,13 +23,11 @@
       <button class="weui-btn" type="primary" style='margin-top: 30rpx;' formType="submit">提交</button>
     </view>
   </form>
-  
-  <view class="weui-msg__extra-area">
-    <view class="weui-footer">
-        <view class="weui-footer__links">
-            <navigator url="" class="weui-footer__link">PICC中国</navigator>
-        </view>
-        <view class="weui-footer__text">Copyright © 2008-2016 PICC</view>
+</view>
+<view class="weui-msg__extra-area">
+  <view class="weui-footer">
+    <view class="weui-footer__links">
+      <image class='logo' src='../Resources/logo.png'></image>
     </view>
   </view>
 </view>

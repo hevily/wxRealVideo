@@ -1,6 +1,6 @@
 <template name='gridtemplate'>
     <view class='grid videoview'>
-        <view class="pusher-box">
+        <cover-view class="player-box">
             <live-pusher wx:if="{{pushURL}}"
                 id="rtcpusher"
                 autopush
@@ -18,10 +18,9 @@
                 bindstatechange="onPush"
                 binderror="onError">
                 <cover-image  class='character' src="/pages/Resources/mask.png"></cover-image>
-                <cover-view class='character' style='padding: 0 5px;'>我</cover-view>
             </live-pusher>
-        </view>
-        <view class="player-box" wx:for="{{members}}" wx:key="userID"> 
+        </cover-view>
+        <view class="pusher-box" wx:for="{{members}}" wx:key="userID"> 
             <view class='poster'>
                 <cover-image  class='set' src="https://miniprogram-1252463788.file.myqcloud.com/roomset_{{index + 2}}.png"></cover-image>
             </view>

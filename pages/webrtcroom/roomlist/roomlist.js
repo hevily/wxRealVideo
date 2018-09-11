@@ -20,9 +20,16 @@ Page({
     var self = this;
     webrtcroom.getRoomList(0, 20, function (res) {
       console.log('拉取房间列表成功:', res);
-      if (res.data && res.data.rooms) {
+      if (res.data && res.data.result) {
+        const services = [];
+        for (var item of res.data.result) {
+          if (item.isService === 'T') {
+            services.push(item);
+          }
+        }
+
         self.setData({
-          roomList: res.data.rooms
+          roomList: services
         });
       }
     }, function (res) { });
@@ -52,30 +59,48 @@ Page({
     if (nowTime - this.data.tapTime < 1000) {
       return;
     }
-    // if (e.currentTarget.dataset.num > 3) {
-    //   wx.showModal({
-    //     title: '提示',
-    //     content: '房间人数已满',
-    //     showCancel: false,
-    //     complete: function () { }
-    //   });
-    //   return;
-    // }
-     const globalOptions = getApp().globalData.options;
-
-    var url = '../room/room?roomID=' + e.currentTarget.dataset.roomid + '&roomName=' + e.currentTarget.dataset.roomname + '&userName=' + this.data.userName + '&roomCreator=' + globalOptions.userID;// e.currentTarget.dataset.roomcreator;
-    if (!this.data.tapJoinRoom) { // 如果没有点击进入房间
-      this.data.tapJoinRoom = true;
-      wx.navigateTo({
-        url: url,
-        complete: () => {
-          this.data.tapJoinRoom = false; // 不管成功还是失败，重置tapJoinRoom
-        }
+    if (e.currentTarget.dataset.num > 3) {
+      wx.showModal({
+        title: '提示',
+        content: '房间人数已满',
+        showCancel: false,
+        complete: function () { }
       });
+      return;
     }
-    this.setData({
-      'tapTime': nowTime
-    });
+    const globaData = getApp().globalData;
+  console.log(e.currentTarget.dataset.roomid);
+    const userName = globaData.userName;
+    const userContact = globaData.userContact || '13800000001';
+    const carNo = globaData.carNo;
+    const seatNo = e.currentTarget.dataset.roomid || 'seat123456';
+    const openid = globaData.openid;
+    const options = {
+      userName: userName || '张三',
+      userContact: userContact || '13800000001',
+      carNo: carNo || '',
+      openid: openid,
+      seatNo: seatNo || 'seat123456',
+    };
+
+    wx.showLoading({
+      title: '正在等待接通',
+    })
+    socketStomp.startSocket(options);
+
+    // var url = '../room/room?roomID=' + e.currentTarget.dataset.roomid + '&roomName=' + e.currentTarget.dataset.roomname + '&userName=' + this.data.userName + '&roomCreator=' + globalOptions.userID;// e.currentTarget.dataset.roomcreator;
+    // if (!this.data.tapJoinRoom) { // 如果没有点击进入房间
+    //   this.data.tapJoinRoom = true;
+    //   wx.navigateTo({
+    //     url: url,
+    //     complete: () => {
+    //       this.data.tapJoinRoom = false; // 不管成功还是失败，重置tapJoinRoom
+    //     }
+    //   });
+    // }
+    // this.setData({
+    //   'tapTime': nowTime
+    // });
   },
 
   compareVersion: function (v1, v2) {
@@ -108,11 +133,26 @@ Page({
 	 * 生命周期函数--监听页面加载
 	 */
   onLoad: function (options) {
-    // var app = getApp();
+    var app = getApp();
     // console.log(app.globalData);
     // socketStomp.initConnect(app.globalData.openid);
     // socketStomp.sendRequestVedio(app.globalData.openid);
-    
+    const openid = getApp().globalData.openid;
+    socketStomp.initConnect(openid, (content) => {
+      const reply = content.reply;
+      if (reply) {
+        app.globalData.options.roomID = content.roomId;
+        app.globalData.orderNo = content.orderNo;
+        wx.navigateTo({
+          url: '../../realstream/realstream',
+        });
+      } else {
+        wx.showToast({
+          title: content.message,
+        });
+      }
+      
+    });
   },
 
 	/**
