@@ -132,6 +132,9 @@ Page({
               wx.showToast({
                 title: '提交成功'
               });
+              wx.navigateBack({
+                delta: 1
+              });
             } else {
               wx.showToast({
                 title: res.data.message,

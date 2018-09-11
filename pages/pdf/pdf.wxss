@@ -81,3 +81,21 @@ scroll-view image {
   height: 100vh;
   background-color: rgba(0, 0, 0, 0.6);
 }
+
+.icon {
+  width: 50rpx;
+  height: 50rpx;
+  margin-right: 5rpx;
+}
+
+.weui-form-preview__btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.weui-form-preview__btn_default {
+  color: #333;
+}
+.weui-form-preview__btn_primary {
+  color: #e8340c;
+}

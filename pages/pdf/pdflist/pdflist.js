@@ -87,12 +87,12 @@ Page({
 
   goSigin: function(e) {
     console.log(e.currentTarget.dataset);
-    if (e.currentTarget.dataset.signstatus === 1) {
-      wx.showToast({
-        title: '文件已签名',
-      });
-      return;
-    }
+    // if (e.currentTarget.dataset.signstatus === 1) {
+    //   wx.showToast({
+    //     title: '文件已签名',
+    //   });
+    //   return;
+    // }
     const { fileid, filename, imageurl, signtype} = e.currentTarget.dataset;
     wx.navigateTo({
       url: '../pdf?fileId=' + fileid + '&fileName=' + filename + '&imageUrl=' + imageurl + '&signType=' + signtype
