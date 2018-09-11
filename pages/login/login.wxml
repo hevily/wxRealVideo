@@ -25,7 +25,7 @@
       </view>
     </view>
     <view class="page__bd page__bd_spacing">
-      <view class="btn btn-login" type="primary" style='margin-top: 30rpx;' bindtap="submit">提交</view>
+      <view class="btn btn-login" type="primary" style='margin-top: 50rpx;' bindtap="submit">提交</view>
     </view>
   </form>
 </view>

@@ -1,9 +1,20 @@
 /* pages/login/login.wxss */
 .select_city {
-    width: 60rpx;
+  width: 60rpx;
 }
 
 .btn-login {
-    margin-top: 50rpx;
-    width: 100%;
+  margin-top: 25px;
+  width: 100%;
+}
+
+.weui-input {
+  font-size: 30rpx;
+}
+.weui-cell_input {
+  padding: 5px 15px;
+}
+
+.weui-label {
+  width: 80px;
 }

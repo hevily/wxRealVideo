@@ -22,8 +22,8 @@ Page({
     isThird: false,
     showDist: false,
     drawImgUrl: '',
-    siginFile1: '',
-    siginFile2: '',
+    siginFile1: null,
+    siginFile2: null,
     selectedFile: {
       fileId: '',
       fileName: '',
@@ -157,23 +157,12 @@ Page({
   },
   nextOne: function() {
     this.setData({
-      showDist: false,
+      showDist: true,
       isSingin: true,
       isThird: true
     });
     this.clear();
     touchs = [];
-
-    const that = this;
-    wx.canvasToTempFilePath({
-      canvasId: 'distCanvas',
-      success: function (res) {
-        const tempPath = res.tempFilePath;
-        that.setData({
-          drawImgUrl: tempPath
-        });
-      }
-    });
   },
   sigin: function() {
     //获得Canvas的上下文
@@ -199,15 +188,15 @@ Page({
     console.log(signType);
     const offsetH = (imgHeight - 60) * this.data.pixelRatio;
     let offsetW = 0;
-    if (signType === 1) {
+    if (signType == '1') {
       offsetW = (imgW - 120) * this.data.pixelRatio;
-    } else if (signType === 2) {
+    } else if (signType == '2') {
       if (isThird) {
         offsetW = (imgW - 80) * this.data.pixelRatio;
       } else {
         offsetW = (imgW / 2 - 30) * this.data.pixelRatio;
       }
-    } else if (signType === 3) {
+    } else if (signType == '3') {
       if (isThird) {
         offsetW = (imgW/2 + 30) * this.data.pixelRatio;
       } else {
@@ -221,8 +210,6 @@ Page({
   },
   mixinFile: function() {
     this.setData({ showDist: true });
-    this.clear();
-    
     const ctx = wx.createCanvasContext('distCanvas');
     const that = this;
     wx.canvasToTempFilePath({
@@ -245,19 +232,23 @@ Page({
             });
             
             ctx.drawImage(that.data.selectedFile.imageUrl, 0, 0, imgW, imgHeight);
-            //设置保存的图片
-            if (that.data.isThird) {
-              const offsets1 = that.getSignOffset(that.data.selectedFile.signType, imgW, imgHeight, true);
-              ctx.drawImage(tempPath, offsets1.offsetW, offsets1.offsetH, width * that.data.pixelRatio, height * that.data.pixelRatio);
-              const offsets = that.getSignOffset(that.data.selectedFile.signType, imgW, imgHeight, false);
-              ctx.drawImage(that.data.siginFile1, offsets.offsetW, offsets.offsetH, width * that.data.pixelRatio, height * that.data.pixelRatio);
-            } else {
+            if (!that.data.siginFile1) {
               that.data.siginFile1 = tempPath;
               const offsets = that.getSignOffset(that.data.selectedFile.signType, imgW, imgHeight, false);
               ctx.drawImage(that.data.siginFile1, offsets.offsetW, offsets.offsetH, width * that.data.pixelRatio, height * that.data.pixelRatio);
+            } else {
+              const offsets = that.getSignOffset(that.data.selectedFile.signType, imgW, imgHeight, false);
+              ctx.drawImage(that.data.siginFile1, offsets.offsetW, offsets.offsetH, width * that.data.pixelRatio, height * that.data.pixelRatio);
+              if (!that.data.siginFile2) {
+                that.data.siginFile2 = tempPath;
+                const offsets1 = that.getSignOffset(that.data.selectedFile.signType, imgW, imgHeight, true);
+                ctx.drawImage(tempPath, offsets1.offsetW, offsets1.offsetH, width * that.data.pixelRatio, height * that.data.pixelRatio);
+
+              }
             }
-            ctx.draw();
             
+            ctx.draw();
+            that.setData({ isSingin: false });            
           }
         })
       }

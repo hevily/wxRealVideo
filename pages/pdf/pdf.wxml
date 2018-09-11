@@ -11,7 +11,8 @@
 </view>
 <view class='siginView' wx:if="{{isSingin}}">
   <view class="noSiginFrame">
-    <view class='titleFrame'>签名区</view>
+    <view class='titleFrame' wx:if="{{ !isThird }}">签名区-(乙方)</view>
+    <view class='titleFrame' wx:else>签名区-(丙方)</view>
     <canvas id="siginCanvas"
       canvas-id="siginCanvas"
       bindtouchmove='move'
@@ -36,7 +37,7 @@
   </view>
   <view class='bottonFrame'>
     <button class='weui-form-preview__btn weui-form-preview__btn_default' lang="zh_CN" bindtap='showCancel'><image class="icon" src="../Resources/back.png" />返回</button>
-    <button wx:if="{{selectedFile.signType == '2' }}" class='weui-form-preview__btn weui-form-preview__btn_default' lang="zh_CN" bindtap='nextOne'><image class="icon" src="../Resources/keep.png" />继续</button>
+    <button wx:if="{{selectedFile.signType == '2' && !isThird}}" class='weui-form-preview__btn weui-form-preview__btn_default' lang="zh_CN" bindtap='nextOne'><image class="icon" src="../Resources/keep.png" />继续</button>
     <button type='submit' class='weui-form-preview__btn weui-form-preview__btn_primary' lang="zh_CN" bindtap='ok'><image class="icon" src="../Resources/submit.png" />提交</button>
   </view>
 </view>
