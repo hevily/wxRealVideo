@@ -3,7 +3,6 @@
     "pages/main/main",
     "pages/pdf/pdf",
     "pages/login/login",
-    "pages/feedback/feedback",
     "pages/webrtcroom/roomlist/roomlist",
     "pages/webrtcroom/roomname/roomname",
     "pages/webrtcroom/room/room",

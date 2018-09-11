@@ -11,6 +11,7 @@ Page({
   data: {
     name: '',
     carNo: '',
+    index: 0,
     array: [
       '鄂','京','津','沪','渝','蒙','新','藏',
       '宁','桂','港','澳','黑','吉','辽','晋',
@@ -87,7 +88,7 @@ Page({
     })
   },
 
-  formSubmit: function (e) {
+  submit: function (e) {
     wx.navigateTo({
       // url: '../webrtcroom/roomlist/roomlist',
       url: '../pdf/pdflist/pdflist',
@@ -97,7 +98,7 @@ Page({
 
     app.globalData.userName = this.data.name;
     // const userContact = '13800000001';
-    app.globalData.carNo = this.data.carNo;
+    app.globalData.carNo = this.data.array[this.data.index] + this.data.carNo;
     app.globalData.userContact = this.data.carNo;
 
     wx.showLoading({

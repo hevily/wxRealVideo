@@ -14,16 +14,18 @@
         <view class="weui-cell__hd">
           <view class="weui-label">车牌</view>
         </view>
-        <view class="weui-cell__bd">
+        <view class="select_city">
           <picker bindchange="bindPickerChange" value="{{index}}" range="{{array}}">
-            <view class="picker">选择:{{array[index]}}</view>
+            <view class="picker">{{array[index] || '鄂'}}</view>
           </picker>
+        </view>
+        <view class="weui-cell__bd">
           <input class="weui-input" placeholder="请输入车牌号码" bindblur="carNoInputEvent"/>
         </view>
       </view>
     </view>
     <view class="page__bd page__bd_spacing">
-      <button class="weui-btn" type="primary" style='margin-top: 30rpx;' formType="submit">提交</button>
+      <view class="btn btn-login" type="primary" style='margin-top: 30rpx;' bindtap="submit">提交</view>
     </view>
   </form>
 </view>
