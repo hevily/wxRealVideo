@@ -9,5 +9,7 @@ App({
   globalData: {
     userInfo: null,
     openid: '',
+    encryptedData: null,
+    iv: null
   }
 })

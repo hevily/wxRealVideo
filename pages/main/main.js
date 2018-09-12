@@ -33,12 +33,6 @@ Page({
     }, 1000);
   },
 
-  getPhoneNumber: function (e) {
-    console.log(e.detail.errMsg)
-    console.log(e.detail.iv)
-    console.log(e.detail.encryptedData)
-  },
-
   /**
    * 生命周期函数--监听页面初次渲染完成
    */

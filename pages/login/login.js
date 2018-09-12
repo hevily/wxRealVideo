@@ -1,5 +1,6 @@
 var config = require('../../config.js');
 var socketStomp = require('../../utils/socketStomp');
+// var decodePhone = require('../../utils/decodePhone.js');
 var app = getApp();
 
 // pages/login/login.js
@@ -137,6 +138,7 @@ Page({
           },
           success: (res) => {
             if (res && res.data && res.data.result) {
+              console.log(res);
               this.openid = res.data.result.openid;
               app.globalData.openid = this.openid;
               resolve();

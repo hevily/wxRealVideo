@@ -20,11 +20,11 @@ Component({
   methods: {
 
     getPhoneNumber: function (e) {
-      console.log(e);
-      console.log(e.detail.errMsg)
-      console.log(e.detail.iv)
-      console.log(e.detail.encryptedData) 
-
+      if (e) {
+        var globalData = getApp().globalData;
+        globalData.encryptedData = e.detail.encryptedData;
+        globalData.iv = e.detail.iv;
+      }
       wx.navigateTo({
         url: '../login/login',
       })
