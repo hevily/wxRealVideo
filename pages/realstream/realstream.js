@@ -129,5 +129,15 @@ Page({
     
     
   },
-
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+    console.log("onShareAppMessage");
+    return {
+      title: '中国人保在线视频报案理赔小程序',
+      path: '/pages/main/main',
+      imageUrl: 'https://jieting.yunmfang.com/picc_share.jpg'
+    }
+  }
 })

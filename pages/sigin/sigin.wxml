@@ -4,8 +4,8 @@
     <view class='bg-box'>
       <image class='bg' src='../Resources/bg.png'></image>
     </view>
-    <view class='btn btn-video' bindtap='getPhoneNumber'>视频报案</view>
-    <view class='phone-box'><image class='call' src='../Resources/call.png'></image>95518</view>
+    <button class='btn btn-video' open-type="getPhoneNumber" bindgetphonenumber='getPhoneNumber'>视频报案</button>
+    <view class='phone-box' bindtap='makecall'><image class='call' src='../Resources/call.png'></image>95518</view>
   </view>
   <view class="weui-msg__extra-area">
     <view class="weui-footer">

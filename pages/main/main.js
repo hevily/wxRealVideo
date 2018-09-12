@@ -75,9 +75,9 @@ Page({
   onShareAppMessage: function () {
     console.log("onShareAppMessage");
     return {
-      title: '腾讯视频云',
+      title: '中国人保在线视频报案理赔小程序',
       path: '/pages/main/main',
-      imageUrl: 'https://mc.qcloudimg.com/static/img/dacf9205fe088ec2fef6f0b781c92510/share.png'
+      imageUrl: 'https://jieting.yunmfang.com/picc_share.jpg'
     }
   }
 })
